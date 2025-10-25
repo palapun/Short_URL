@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener - สร้างลิงก์สั้น</title>
+    <link rel="stylesheet" href="styles.css?v=2025-10-25">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1><i class="fas fa-link"></i> URL Shortener</h1>
+            </div>
+            <div class="navbar-actions">
+                <span class="welcome-text" id="welcomeText">Welcome, Guest!</span>
+                <a href="profile.html" class="btn btn-outline btn-sm">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <button id="logoutBtn" class="btn btn-outline btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+        
+        <header class="header">
+            <h2>Click to create your link</h2>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- URL Shortener Form -->
+            <section class="url-form-section">
+                <div class="form-container">
+                    <form id="urlForm" class="url-form">
+                        <div class="form-group">
+                            <label for="originalUrl">URL ที่ต้องการทำให้สั้น</label>
+                            <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customAlias">Custom Alias</label>
+                                <input type="text" id="customAlias" name="customAlias" placeholder="my-custom-link" maxlength="50">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expiresAt">วันหมดอายุ</label>
+                                <input type="datetime-local" id="expiresAt" name="expiresAt">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-compress-alt"></i> Create Short Link
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section id="resultSection" class="result-section" style="display: none;">
+                <div class="result-container">
+                    <h3><i class="fas fa-check-circle"></i> สร้างลิงก์สั้นสำเร็จ!</h3>
+                    <div class="result-content">
+                        <div class="url-display">
+                            <label>ลิงก์สั้น:</label>
+                            <div class="url-input-group">
+                                <input type="text" id="shortUrl" readonly>
+                                <button id="copyBtn" class="btn btn-secondary">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button id="qrBtn" class="btn btn-success">
+                                <i class="fas fa-qrcode"></i> ดู QR Code
+                            </button>
+                            <button id="statsBtn" class="btn btn-info">
+                                <i class="fas fa-chart-bar"></i> ดูสถิติ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QR Code Modal -->
+            <div id="qrModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3><i class="fas fa-qrcode"></i> QR Code</h3>
+                    <div id="qrCodeContainer">
+                        <img id="qrCodeImage" alt="QR Code">
+                    </div>
+                    <div class="qr-actions">
+                        <button id="downloadQrBtn" class="btn btn-primary">
+                            <i class="fas fa-download"></i> ดาวน์โหลด QR Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="shorten">
+                    <i class="fas fa-plus"></i> Create Short Link
+                </button>
+                <button class="tab-btn" data-tab="history">
+                    <i class="fas fa-history"></i> History
+                </button>
+            </nav>
+
+            <!-- History Section -->
+            <section id="historySection" class="history-section" style="display: none;">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Short Link History</h3>
+                    <button id="refreshHistoryBtn" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                
+                <div class="history-content">
+                    <div id="historyList" class="history-list">
+                        <!-- History items will be loaded here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+            <p>กำลังประมวลผล...</p>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
