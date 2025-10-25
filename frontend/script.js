@@ -1,4 +1,4 @@
-// Development API URL - เปลี่ยนเป็น production URL หลังจาก deploy
+ล// Development API URL - เปลี่ยนเป็น production URL หลังจาก deploy
 const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
 
 function checkAuth() {
@@ -18,9 +18,7 @@ function loadUserInfo() {
 }
 
 function handleLogout() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userId');
+    localStorage.clear(); // ลบทุกอย่างใน Local Storage
     window.location.href = 'login.html';
 }
 
