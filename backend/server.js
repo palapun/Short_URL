@@ -14,7 +14,7 @@ const app = express();
 app.use(helmet());
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://your-app-name.netlify.app', 'https://*.netlify.app'],
+  origin: ['http://localhost:3000', 'https://sparkling-rabanadas-b2b845.netlify.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
