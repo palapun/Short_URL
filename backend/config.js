@@ -14,6 +14,6 @@ module.exports = {
     shortUrlLength: parseInt(process.env.SHORT_URL_LENGTH) || 6
   },
   jwt: {
-    secret: process.env.JWT_SECRET || 'your-secret-key-here'
-  }
+    secret: 'new-secret-key',
+  },
 };
