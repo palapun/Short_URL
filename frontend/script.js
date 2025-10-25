@@ -1,5 +1,6 @@
 // Development API URL - เปลี่ยนเป็น production URL หลังจาก deploy
 const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
+
 function checkAuth() {
     const token = localStorage.getItem('userToken');
     if (!token) {
