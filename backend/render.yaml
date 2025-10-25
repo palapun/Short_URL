@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: url-shortener-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://punyawat5114_db_ShortURL:1234567890@cluster0.0pnbuxm.mongodb.net/urlshortener?retryWrites=true&w=majority
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: your-super-secret-jwt-key-change-this-in-production
