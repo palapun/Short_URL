@@ -10,7 +10,7 @@ const authMiddleware = (req, res, next) => {
       return res.status(401).json({ error: 'Access denied. No token provided.' });
     }
 
-    const decoded = jwt.verify(token, config.jwt.secret);
+    const decoded = jwt.verify(token, 'new-secret-key');
     req.user = decoded;
     next();
   } catch (error) {
