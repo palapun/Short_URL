@@ -1,4 +1,4 @@
-ล// Development API URL - เปลี่ยนเป็น production URL หลังจาก deploy
+// Development API URL - เปลี่ยนเป็น production URL หลังจาก deploy
 const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
 
 function checkAuth() {
@@ -140,13 +140,13 @@ async function handleUrlSubmit(e) {
             setDefaultExpireDate();
             
             setTimeout(() => {
-('Calling loadHistory after delay...');
-('Current history data before refresh:', historyData.length, 'items');
+                console.log('Calling loadHistory after delay...');
+                console.log('Current history data before refresh:', historyData.length, 'items');
                 
                 loadHistory();
                 
                 setTimeout(() => {
-('Switching to history tab...');
+                    console.log('Switching to history tab...');
                     switchTab('history');
                 }, 200);
             }, 1000); // Increased delay to ensure backend has processed the request
