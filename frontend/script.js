@@ -251,6 +251,7 @@ async function loadHistory() {
 ('🔑 Authorization header:', `Bearer ${token.substring(0, 20)}...`);
         
         const response = await fetch(`${API_BASE_URL}/urls`, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -286,6 +287,8 @@ async function loadHistory() {
             }
         } else {
             console.error('❌ History API error:', data);
+            console.error('❌ Response status:', response.status);
+            console.error('❌ Response headers:', Object.fromEntries(response.headers.entries()));
             showToast(`Unable to load history: ${data.error}`, 'error');
         }
     } catch (error) {
