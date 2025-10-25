@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const config = require('../config');
 
 const saltRounds = 10;
-const JWT_SECRET = 'new-secret-key';
 
 class AuthController {
   static async register(req, res) {
@@ -61,7 +61,7 @@ class AuthController {
 
       const token = jwt.sign(
         { userId: user.id, username: user.username },
-        JWT_SECRET,
+        config.jwt.secret,
         { expiresIn: '7d' }
       );
 
@@ -84,7 +84,7 @@ class AuthController {
         return res.status(401).json({ error: 'No token provided' });
       }
 
-      const decoded = jwt.verify(token, JWT_SECRET);
+      const decoded = jwt.verify(token, config.jwt.secret);
       req.user = decoded;
       next();
     } catch (error) {
