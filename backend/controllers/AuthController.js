@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const saltRounds = 10;
-const JWT_SECRET = 'your-secret-key-here';
+const JWT_SECRET = 'new-secret-key';
 
 class AuthController {
   static async register(req, res) {
