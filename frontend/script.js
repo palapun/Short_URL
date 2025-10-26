@@ -92,16 +92,12 @@ function initializeApp() {
     if (historyTab) {
         historyTab.addEventListener('click', () => {
             setTimeout(() => {
-                loadHistory();
+                loadHistory(true); // Show toast when user clicks the tab
             }, 100);
         });
     }
     
-    setInterval(() => {
-        if (historySection.style.display !== 'none') {
-            loadHistory();
-        }
-    }, 5000);
+    // Removed auto-refresh - only load history when user opens the tab
 }
 
 function setDefaultExpireDate() {
@@ -144,16 +140,12 @@ async function handleUrlSubmit(e) {
             setDefaultExpireDate();
             
             setTimeout(() => {
-                console.log('Calling loadHistory after delay...');
-                console.log('Current history data before refresh:', historyData.length, 'items');
-                
-                loadHistory();
+                loadHistory(false); // Don't show toast after creating link
                 
                 setTimeout(() => {
-                    console.log('Switching to history tab...');
                     switchTab('history');
                 }, 200);
-            }, 1000); // Increased delay to ensure backend has processed the request
+            }, 1000);
         } else {
             console.error('Failed to create URL:', result);
             let errorMessage = result.error || 'An error occurred';
@@ -238,21 +230,15 @@ function handleShowStats() {
     showToast('Loading statistics...', 'info');
 }
 
-async function loadHistory() {
-('🔍 ===== LOAD HISTORY START =====');
+async function loadHistory(showToast = true) {
     try {
         const token = localStorage.getItem('userToken');
-('🔑 Token check:', token ? 'Present' : 'Missing');
-('🔑 Token value:', token ? token.substring(0, 20) + '...' : 'None');
         
         if (!token) {
             console.error('❌ No token found, redirecting to login');
             window.location.href = 'login.html';
             return;
         }
-        
-('🌐 Making API call to:', `${API_BASE_URL}/urls`);
-('🔑 Authorization header:', `Bearer ${token.substring(0, 20)}...`);
         
         const response = await fetch(`${API_BASE_URL}/urls`, {
             method: 'GET',
@@ -262,44 +248,29 @@ async function loadHistory() {
             }
         });
         
-('📡 API response status:', response.status);
-('📡 API response headers:', Object.fromEntries(response.headers.entries()));
-        
         const data = await response.json();
-('📊 API response data:', data);
-('📊 Data type:', typeof data);
-('📊 Data length:', Array.isArray(data) ? data.length : 'Not an array');
         
         if (response.ok) {
             historyData = data;
-('✅ History data loaded:', historyData.length, 'items');
-('📋 Full history data:', JSON.stringify(historyData, null, 2));
-            
             historySection.style.display = 'block';
-('👁️ History section display set to block');
-            
-('🎨 Calling renderHistory...');
             renderHistory();
-('✅ renderHistory completed');
             
-            if (historyData.length > 0) {
-('🎉 History loaded successfully with', historyData.length, 'items');
-                showToast(`History loaded successfully! Found ${historyData.length} links`, 'success');
-            } else {
-('📭 No history data found');
-                showToast('No short link history yet', 'info');
+            // Only show toast if explicitly requested
+            if (showToast) {
+                if (historyData.length > 0) {
+                    showToast(`History loaded successfully! Found ${historyData.length} links`, 'success');
+                } else {
+                    showToast('No short link history yet', 'info');
+                }
             }
         } else {
             console.error('❌ History API error:', data);
-            console.error('❌ Response status:', response.status);
-            console.error('❌ Response headers:', Object.fromEntries(response.headers.entries()));
             showToast(`Unable to load history: ${data.error}`, 'error');
         }
     } catch (error) {
         console.error('❌ Error loading history:', error);
         showToast(`Error loading history: ${error.message}`, 'error');
     }
-('🔍 ===== LOAD HISTORY END =====');
 }
 
 function renderHistory() {
