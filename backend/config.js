@@ -10,7 +10,7 @@ module.exports = {
     env: process.env.NODE_ENV || 'development'
   },
   app: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:5000',
+    baseUrl: process.env.BASE_URL || 'https://short-url-zxhk.onrender.com',
     shortUrlLength: parseInt(process.env.SHORT_URL_LENGTH) || 6
   },
   jwt: {
