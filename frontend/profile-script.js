@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
 const toastContainer = document.getElementById('toastContainer');
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -50,6 +50,9 @@ async function handleChangePassword(e) {
     }
 
     const token = localStorage.getItem('userToken');
+    console.log('🔐 Token check:', token ? 'exists' : 'missing');
+    console.log('🔐 Token value:', token ? token.substring(0, 30) + '...' : 'none');
+    
     if (!token) {
         showToast('Please login again', 'error');
         setTimeout(() => {
@@ -59,6 +62,7 @@ async function handleChangePassword(e) {
     }
 
     try {
+        console.log('🌐 Making password change request...');
         const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
             method: 'POST',
             headers: {
@@ -67,6 +71,8 @@ async function handleChangePassword(e) {
             },
             body: JSON.stringify({ currentPassword, newPassword })
         });
+        
+        console.log('📡 Response status:', response.status);
 
         const result = await response.json();
 
