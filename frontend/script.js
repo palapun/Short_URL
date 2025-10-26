@@ -3,7 +3,11 @@ const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
 
 function checkAuth() {
     const token = localStorage.getItem('userToken');
+    const username = localStorage.getItem('username');
+    console.log('🔐 Auth Check:', { token: token ? 'exists' : 'null', username });
+    
     if (!token) {
+        console.log('❌ No token found, redirecting to login...');
         window.location.href = 'login.html';
         return false;
     }
