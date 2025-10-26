@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://short-url-zxhk.onrender.com/api';
 const toastContainer = document.getElementById('toastContainer');
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -61,6 +61,16 @@ async function handleLogin(e) {
             localStorage.setItem('userToken', result.token);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('userId', result.user.id);
+            console.log('✅ Login successful, token saved:', {
+                token: result.token ? 'exists' : 'null',
+                username: result.user.username,
+                userId: result.user.id
+            });
+            
+            // ตรวจสอบว่า token บันทึกสำเร็จหรือไม่
+            const savedToken = localStorage.getItem('userToken');
+            console.log('🔍 Verification - saved token:', savedToken ? 'OK' : 'FAILED');
+            
             showToast('Login successful!', 'success');
             setTimeout(() => {
                 window.location.href = 'index.html';
